@@ -31,8 +31,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements
 
-        StackOverFlowRequest.AsyncResponseStackOverFlow,
-        SearchTag.AsyncResponse_Ler
+        StackOverFlowRequestQuestions.AsyncResponseStackOverFlow
 {
 
     // ******   Variables  *****
@@ -68,13 +67,6 @@ public class MainActivity extends AppCompatActivity implements
 
         // *****   Events   *****
         // Change Page
-
-
-    }
-
-    private void insertImage(){
-
-
 
     }
 
@@ -129,17 +121,9 @@ public class MainActivity extends AppCompatActivity implements
 
     private void refreshTag() throws IOException, net.sf.stackwrap4j.json.JSONException {
 
-        //testAPI();
-
-        StackOverFlowRequest stackOverFlowRequest = new StackOverFlowRequest(ctx, true);
+        StackOverFlowRequestQuestions stackOverFlowRequest = new StackOverFlowRequestQuestions(ctx, true);
         stackOverFlowRequest.delegate = MainActivity.this;
-        stackOverFlowRequest.execute(spinnerTags.getSelectedItem().toString());
-
-        //JSON_Questions();
-
-        /*SearchTag searchTag = new SearchTag(ctx,true);
-        searchTag.delegate = MainActivity.this;
-        searchTag.execute(spinnerTags.getSelectedItem().toString());*/
+        stackOverFlowRequest.execute(spinnerTags.getSelectedItem().toString().replaceAll(" ", "-"));
 
     }
 
@@ -221,10 +205,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @Override
-    public void processFinishSearch(String result) {
-        openAlertDialog("","Result"+result);
-    }
 
     private class adapterQuestions extends ArrayAdapter<Question_Line> {
 

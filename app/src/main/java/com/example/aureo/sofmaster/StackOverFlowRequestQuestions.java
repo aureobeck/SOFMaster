@@ -4,33 +4,29 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
-
-import net.sf.stackwrap4j.StackOverflow;
 import net.sf.stackwrap4j.http.HttpClient;
 import net.sf.stackwrap4j.query.SearchQuery;
 
 import java.io.IOException;
 
 
-public class StackOverFlowRequest extends AsyncTask<String,Void,String> {
+public class StackOverFlowRequestQuestions extends AsyncTask<String,Void,String> {
+
     Context context;
     Boolean dialog_true;
     Dialog dialog;
     AlertDialog alertDialog;
 
-    StackOverFlowRequest(Context ctx, Boolean dialog) {
+    StackOverFlowRequestQuestions(Context ctx, Boolean dialog) {
         context = ctx;
         dialog_true = dialog;
     }
-    //Dialog dialog = new Dialog(context);
+
     @Override
     protected String doInBackground(String... params) {
         try {
-            StackOverflow stackoverflow = new StackOverflow(context.getString(R.string.api_key));
             SearchQuery query = new SearchQuery();
             query.addTag(params[0]);
-
-            //Stats stats = stackoverflow.getStats();
             return new HttpClient().sendGetRequest("http://api.stackexchange.com/", "2.2/", "search", context.getString(R.string.api_key), query.getUrlParams());
 
         }catch (IOException exp){
@@ -58,7 +54,7 @@ public class StackOverFlowRequest extends AsyncTask<String,Void,String> {
 
     public AsyncResponseStackOverFlow delegate = null;
 
-    public StackOverFlowRequest(AsyncResponseStackOverFlow delegate){
+    public StackOverFlowRequestQuestions(AsyncResponseStackOverFlow delegate){
         this.delegate = delegate;
     }
 
