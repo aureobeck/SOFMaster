@@ -16,6 +16,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import net.sf.stackwrap4j.StackOverflow;
 import net.sf.stackwrap4j.StackWrapper;
 import net.sf.stackwrap4j.json.JSONException;
@@ -65,6 +68,12 @@ public class MainActivity extends AppCompatActivity implements
 
         // *****   Events   *****
         // Change Page
+
+
+    }
+
+    private void insertImage(){
+
 
 
     }
@@ -236,6 +245,12 @@ public class MainActivity extends AppCompatActivity implements
             final Question_Line current_line = arrayListQuestions.get(position);
 
             ImageView imageViewQuestionUser = (ImageView) itemView.findViewById(R.id.question_user_image);
+            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(MainActivity.this).build();
+            ImageLoader.getInstance().init(config);
+
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            imageLoader.displayImage(current_line.getImageURL(), imageViewQuestionUser);
+
             //imageViewQuestionUser.setImageResource();
 
             TextView textViewQuestionTitle = (TextView) itemView.findViewById(R.id.title_question);
