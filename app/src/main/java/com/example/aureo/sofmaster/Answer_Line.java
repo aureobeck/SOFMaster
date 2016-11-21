@@ -3,7 +3,7 @@ package com.example.aureo.sofmaster;
 /**
  * Created by Aureo on 28/02/2016.
  */
-public class Question_Line {
+public class Answer_Line {
 
     private String title;
     private String user;
@@ -11,16 +11,13 @@ public class Question_Line {
     private String classification;
     private String id;
     private String body;
-    private String answerJSON;
 
-
-    public Question_Line(String title,
+    public Answer_Line(  String title,
                          String user,
                          String image_url,
                          String classification,
                          String id,
-                         String body,
-                         String answerJSON
+                         String body
 
     ){
         super();
@@ -30,7 +27,6 @@ public class Question_Line {
         this.classification = classification;
         this.id = id;
         this.body = body;
-        this.answerJSON = answerJSON;
 
     }
 
@@ -51,7 +47,4 @@ public class Question_Line {
 
     public String getBody(){return body;}
     public void setBody(String str) {body = str;}
-
-    public String getAnswerJSON(){return answerJSON;}
-    public void setAnswerJSON(String str) {answerJSON = str;}
 }

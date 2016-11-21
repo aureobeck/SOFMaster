@@ -12,7 +12,7 @@
     <color name="background_splash_new_user">#6ca1a3</color>
     <color name="background_grey_01">#d9d6d6</color>
     <color name="controleVerdeClaro">#cbc9e1</color>
-    <color name="controleVerdeEscuro">#767796</color>
+    <color name="controleCinza">#767796</color>
     <color name="fundoVerdeTitulo">#1d1548</color>
     <color name="fundoCinzaClaro">#f5f5f5</color>
     <color name="red_button">#b71c1c</color>

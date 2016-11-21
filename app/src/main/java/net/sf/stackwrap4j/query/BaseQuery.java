@@ -217,6 +217,7 @@ public abstract class BaseQuery implements Serializable {
 
 			// Adicionado por Aureo
 			params = addParameter(params, "site", "stackoverflow");
+			params = addParameter(params, "filter", "!-*f(6rc.(Xr5");
 		}
 		return params;
 	}

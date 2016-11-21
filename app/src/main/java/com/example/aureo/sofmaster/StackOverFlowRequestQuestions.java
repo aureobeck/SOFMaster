@@ -47,20 +47,20 @@ public class StackOverFlowRequestQuestions extends AsyncTask<String,Void,String>
         //alertDialog = new AlertDialog.Builder(context).create();
     }
 
-    public interface AsyncResponseStackOverFlow {
-        //void processFinishLer(String output);
-        void processFinishLer(String result);
+    public interface AsyncResponseStackOverFlowQuestions {
+        //void processFinishStackOverFlowQuestions(String output);
+        void processFinishStackOverFlowQuestions(String result);
     }
 
-    public AsyncResponseStackOverFlow delegate = null;
+    public AsyncResponseStackOverFlowQuestions delegate = null;
 
-    public StackOverFlowRequestQuestions(AsyncResponseStackOverFlow delegate){
+    public StackOverFlowRequestQuestions(AsyncResponseStackOverFlowQuestions delegate){
         this.delegate = delegate;
     }
 
     @Override
     protected void onPostExecute(String result) {
-        delegate.processFinishLer(result);
+        delegate.processFinishStackOverFlowQuestions(result);
         if (dialog_true) {
             dialog.dismiss();
         }

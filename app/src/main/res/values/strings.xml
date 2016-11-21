@@ -1,7 +1,4 @@
 <resources>
-    <string name="app_name">SOF Master</string>
-    <string name="app_name_long">StackOverFlow Master</string>
-    <!--<string name="api_key">HfcrfHOspEi0eDvddRGxqw</string>-->
     <string name="api_key">H75S86ZroBNkuJlvRXyVgQ((</string>
 
     <string-array name="array_tags">
@@ -12,6 +9,11 @@
         <item>Nexus</item>                      // 4
     </string-array>
 
+    <!-- Titles-Activity-Portuguese -->
+    <string name="app_name">SOF Master</string>
+    <string name="app_name_long">StackOverFlow Master</string>
+    <string name="title_question_activity">Pergunta</string>
+
     <!-- Titles-Portuguese -->
     <string name="title_no_internet">Sem Internet</string>
 
@@ -19,6 +21,7 @@
     <string name="message_no_internet">Ops, verfique sua conexão de internet!</string>
     <string name="message_empty_result">Sem resultados</string>
     <string name="general_error">Houve um erro, por favor reinicie o app e contate o suporte!</string>
+    <string name="message_empty_answers">Sem respostas ainda...</string>
 
     <!-- Words-Portuguese -->
     <string name="word_user">Usuário</string>

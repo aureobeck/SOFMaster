@@ -1,6 +1,7 @@
 package com.example.aureo.sofmaster;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -31,8 +32,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements
 
-        StackOverFlowRequestQuestions.AsyncResponseStackOverFlow
-{
+        StackOverFlowRequestQuestions.AsyncResponseStackOverFlowQuestions {
 
     // ******   Variables  *****
     Context ctx = this;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements
         configureControls();
 
         // *****   Events   *****
-        // Change Page
+        onQuestionClick();
 
     }
 
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements
     private void configureControls() {
 
         // Configure Spinner Tag
-        adapterSpinnerTags = ArrayAdapter.createFromResource(this, R.array.array_tags, android.R.layout.simple_spinner_item);
+        adapterSpinnerTags = ArrayAdapter.createFromResource(this, R.array.array_tags, R.layout.text_view_01);
         adapterSpinnerTags.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTags.setAdapter(adapterSpinnerTags);
         spinnerTags.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -127,36 +127,45 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    private void JSON_Questions(String json_string){
+    private void onQuestionClick() {
+        listViewQuestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent("com.example.aureo.sofmaster.QuestionActivity");
+                intent.putExtra("id_current_question", arrayListQuestions.get(position).getId());
+                intent.putExtra("title_current_question", arrayListQuestions.get(position).getTitle());
+                intent.putExtra("body_current_question", arrayListQuestions.get(position).getBody());
+                intent.putExtra("answers_current_question", arrayListQuestions.get(position).getAnswerJSON());
+                startActivity(intent);
+            }
+        });
+    }
 
+    private ArrayList<Answer_Line> jsonToArrayListAnswers(JSONArray jsonArray) {
+        ArrayList<Answer_Line> arrayListAnswers = new ArrayList<>();
         try {
-            JSONObject jsonObject = new JSONObject(json_string);
-            JSONArray jsonArray = jsonObject.getJSONArray("items");
-
-            arrayListQuestions.clear();
-            for (int index=0; index<jsonArray.length(); index++){
-                arrayListQuestions.add(new Question_Line(
+            for (int index = 0; index < jsonArray.length(); index++) {
+                arrayListAnswers.add(new Answer_Line(
                         jsonArray.getJSONObject(index).getString("title"),
                         jsonArray.getJSONObject(index).getJSONObject("owner").getString("display_name"),
                         jsonArray.getJSONObject(index).getJSONObject("owner").getString("profile_image"),
-                        jsonArray.getJSONObject(index).getString("score")
-                ));
+                        jsonArray.getJSONObject(index).getString("score"),
+                        jsonArray.getJSONObject(index).getString("answer_id"),
+                        jsonArray.getJSONObject(index).getString("body")
+                        ));
             }
-            adapterListViewQuestions.notifyDataSetChanged();
-
-            //openAlertDialog("",jsonArray.toString());
-        } catch (org.json.JSONException ex){
+        } catch (org.json.JSONException ex) {
             openAlertDialog("", ex.getMessage());
         }
-
+        return arrayListAnswers;
     }
 
-    private void testAPI(){
+    private void testAPI() {
         String displayText = null;
         try {
-        StackWrapper stackWrap = new StackOverflow(getString(R.string.api_key));
+            StackWrapper stackWrap = new StackOverflow(getString(R.string.api_key));
 
-        openAlertDialog("",stackWrap.getStats().toString());
+            openAlertDialog("", stackWrap.getStats().toString());
 
             /*Stats stats = stackWrap.getStats();
             displayText = "Stack Overflow Statistics";
@@ -168,41 +177,62 @@ public class MainActivity extends AppCompatActivity implements
             displayText += "\nTotal Users: " + stats.getTotalUsers();*/
 
             //openAlertDialog("","Result: "+displayText);
-        }
-        catch(JSONException | IOException e){
+        } catch (JSONException | IOException e) {
 
             displayText = e.getMessage();
-            openAlertDialog("","Error: "+e.getMessage());
+            openAlertDialog("", "Error: " + e.getMessage());
         }
     }
 
     @Override
-    public void processFinishLer(String questions) {
+    public void processFinishStackOverFlowQuestions(String questions) {
 
-        //openAlertDialog("",questions);
-
-        if (questions==null) {
-                openAlertDialog(getString(R.string.word_search), getString(R.string.message_empty_result));
+        if (questions == null) {
+            openAlertDialog(getString(R.string.word_search), getString(R.string.message_empty_result));
         } else {
-
             JSON_Questions(questions);
-            /*
-            Integer count = 0;
-            if (questions.size() > 20) {
-                count = 20;
-            } else {
-                count = questions.size();
-            }
+        }
+    }
+    private void JSON_Questions(String json_string) {
+
+        try {
+            JSONObject jsonObject = new JSONObject(json_string);
+            JSONArray jsonArray = jsonObject.getJSONArray("items");
 
             arrayListQuestions.clear();
-            for (int index = 0; index < count; index++) {
-                arrayListQuestions.add(new Question_Line(questions.get(index).getTitle(),
-                                questions.get(index).getOwner().getDisplayName(),
-                                questions.get(index).getScore()
-                        )
-                );
-            }*/
+            for (int index = 0; index < jsonArray.length(); index++) {
+                try {
+                arrayListQuestions.add(new Question_Line(
+                        jsonArray.getJSONObject(index).getString("title"),
+                        jsonArray.getJSONObject(index).getJSONObject("owner").getString("display_name"),
+                        jsonArray.getJSONObject(index).getJSONObject("owner").getString("profile_image"),
+                        jsonArray.getJSONObject(index).getString("score"),
+                        jsonArray.getJSONObject(index).getString("question_id"),
+                        jsonArray.getJSONObject(index).getString("body"),
+                        "{\"answers\": "+jsonArray.getJSONObject(index).getJSONArray("answers").toString()+"}"
+                ));
+                } catch (org.json.JSONException ex) {
+
+                    arrayListQuestions.add(new Question_Line(
+                            jsonArray.getJSONObject(index).getString("title"),
+                            jsonArray.getJSONObject(index).getJSONObject("owner").getString("display_name"),
+                            jsonArray.getJSONObject(index).getJSONObject("owner").getString("profile_image"),
+                            jsonArray.getJSONObject(index).getString("score"),
+                            jsonArray.getJSONObject(index).getString("question_id"),
+                            jsonArray.getJSONObject(index).getString("body"),
+                            ""
+                    ));
+                }
+
+            }
+            adapterListViewQuestions.notifyDataSetChanged();
+
+
+            //openAlertDialog("",jsonArray.toString());
+        } catch (org.json.JSONException ex) {
+            openAlertDialog("", ex.getMessage());
         }
+
     }
 
 
@@ -264,64 +294,4 @@ public class MainActivity extends AppCompatActivity implements
             }
         }, length);
     }
-
-    String json_test="        {\n" +
-            "  \"items\": [\n" +
-            "    {\n" +
-            "      \"tags\": [\n" +
-            "        \"java\",\n" +
-            "        \"android\",\n" +
-            "        \"android-fragments\",\n" +
-            "        \"parameter-passing\"\n" +
-            "      ],\n" +
-            "      \"owner\": {\n" +
-            "        \"reputation\": 47,\n" +
-            "        \"user_id\": 5425093,\n" +
-            "        \"user_type\": \"registered\",\n" +
-            "        \"accept_rate\": 71,\n" +
-            "        \"profile_image\": \"https://www.gravatar.com/avatar/b0d44a52cfc2f0e6fee00eff4fad6277?s=128&d=identicon&r=PG&f=1\",\n" +
-            "        \"display_name\": \"Tanav Sharma\",\n" +
-            "        \"link\": \"http://stackoverflow.com/users/5425093/tanav-sharma\"\n" +
-            "      },\n" +
-            "      \"is_answered\": true,\n" +
-            "      \"view_count\": 17,\n" +
-            "      \"answer_count\": 3,\n" +
-            "      \"score\": 0,\n" +
-            "      \"last_activity_date\": 1479669007,\n" +
-            "      \"creation_date\": 1479665594,\n" +
-            "      \"last_edit_date\": 1479666892,\n" +
-            "      \"question_id\": 40707585,\n" +
-            "      \"link\": \"http://stackoverflow.com/questions/40707585/passing-a-float-value-from-a-ratingbar-from-one-fragment-to-another\",\n" +
-            "      \"title\": \"Passing a FLOAT value from a ratingBar from one fragment to another\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"tags\": [\n" +
-            "        \"java\",\n" +
-            "        \"android\",\n" +
-            "        \"android-fragments\"\n" +
-            "      ],\n" +
-            "      \"owner\": {\n" +
-            "        \"reputation\": 14,\n" +
-            "        \"user_id\": 6415796,\n" +
-            "        \"user_type\": \"registered\",\n" +
-            "        \"profile_image\": \"https://graph.facebook.com/10208534019459221/picture?type=large\",\n" +
-            "        \"display_name\": \"Filip Vuković\",\n" +
-            "        \"link\": \"http://stackoverflow.com/users/6415796/filip-vukovi%c4%87\"\n" +
-            "      },\n" +
-            "      \"is_answered\": false,\n" +
-            "      \"view_count\": 26,\n" +
-            "      \"answer_count\": 1,\n" +
-            "      \"score\": 0,\n" +
-            "      \"last_activity_date\": 1479668890,\n" +
-            "      \"creation_date\": 1479664172,\n" +
-            "      \"question_id\": 40707313,\n" +
-            "      \"link\": \"http://stackoverflow.com/questions/40707313/i-cant-call-fragment-method-from-mainactivity\",\n" +
-            "      \"title\": \"I can&#39;t call fragment method from MainActivity\"\n" +
-            "    }\n" +
-            "\n" +
-            "\t],\n" +
-            "  \"has_more\": true,\n" +
-            "  \"quota_max\": 10000,\n" +
-            "  \"quota_remaining\": 9974\n" +
-            "}\n";
 }

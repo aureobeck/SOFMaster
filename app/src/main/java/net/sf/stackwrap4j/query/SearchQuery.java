@@ -43,7 +43,7 @@ public class SearchQuery extends TaggedQuery {
     private static final long serialVersionUID = -1260731004294644012L;
     
     private static final int page = 1;
-	private static final int pageSize = 30;
+	private static final int pageSize = 20;
 	private static final String inTitle = "";
 	private static final String notTagged = "";
 	private static final Order order = Order.DESC;

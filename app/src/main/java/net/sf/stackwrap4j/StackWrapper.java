@@ -627,7 +627,7 @@ public class StackWrapper implements Serializable {
      * @throws IOException If an I/O error occurs.
      * @throws JSONException If there is a problem parsing the response.
      */
-    /*public List<Question> search(SearchQuery query) throws IOException, JSONException {
+    public List<Question> search(SearchQuery query) throws IOException, JSONException {
     	String json = new HttpClient().sendGetRequest(API_URL, VERSION, "search", soApiKey, query.getUrlParams());
     	MetadataList<Question> questions = null;
     	try {
@@ -639,21 +639,8 @@ public class StackWrapper implements Serializable {
     	    throw new JSONException( error.getMessage() );
     	}
     	return questions;
-    }*/
-
-    public String search(SearchQuery query) throws IOException, JSONException {
-    	String json = new HttpClient().sendGetRequest(API_URL, VERSION, "search", soApiKey, query.getUrlParams());
-    	/*MetadataList<Question> questions = null;
-    	try {
-    	    questions = new MetadataList<Question>(json, Question.fromJSONString(json, this));
-    	}
-    	catch(JSONException je) {
-    	    // if the Error can't be parsed, a generic JSONException is thrown.
-    	    net.sf.stackwrap4j.entities.Error error = new net.sf.stackwrap4j.entities.Error(json, this);
-    	    throw new JSONException( error.getMessage() );
-    	}*/
-    	return json;
     }
+
 
     
     /***** Stats Method *****/
