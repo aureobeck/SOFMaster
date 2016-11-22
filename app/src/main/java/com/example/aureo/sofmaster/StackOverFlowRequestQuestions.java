@@ -9,6 +9,9 @@ import net.sf.stackwrap4j.query.SearchQuery;
 
 import java.io.IOException;
 
+/**
+ * StackOverFlowRequestQuestions - handles communication with StackOverFlow API
+ */
 
 public class StackOverFlowRequestQuestions extends AsyncTask<String,Void,String> {
 
@@ -54,9 +57,6 @@ public class StackOverFlowRequestQuestions extends AsyncTask<String,Void,String>
 
     public AsyncResponseStackOverFlowQuestions delegate = null;
 
-    public StackOverFlowRequestQuestions(AsyncResponseStackOverFlowQuestions delegate){
-        this.delegate = delegate;
-    }
 
     @Override
     protected void onPostExecute(String result) {
@@ -71,25 +71,5 @@ public class StackOverFlowRequestQuestions extends AsyncTask<String,Void,String>
         super.onProgressUpdate(values);
     }
 
-    public void openErrorConexion() {
-        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(context).create();
-        alertDialog.setTitle(context.getString(R.string.title_no_internet));
-        alertDialog.setMessage(context.getString(R.string.message_no_internet));
-        alertDialog.show();
-    }
-
-    public void openAlertDialog(String title, String message) {
-        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(context).create();
-        alertDialog.setTitle(title);
-        alertDialog.setMessage(message);
-        alertDialog.show();
-    }
-
-    private void openErrorDialog() {
-        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Error");
-        alertDialog.setMessage(context.getString(R.string.general_error));
-        alertDialog.show();
-    }
 
 }

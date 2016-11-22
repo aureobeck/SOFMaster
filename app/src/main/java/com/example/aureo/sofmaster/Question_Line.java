@@ -1,8 +1,5 @@
 package com.example.aureo.sofmaster;
 
-/**
- * Created by Aureo on 28/02/2016.
- */
 public class Question_Line {
 
     private String title;

@@ -10,25 +10,32 @@
     </string-array>
 
     <!-- Titles-Activity-Portuguese -->
-    <string name="app_name">SOF Master</string>
     <string name="app_name_long">StackOverFlow Master</string>
     <string name="title_question_activity">Pergunta</string>
 
     <!-- Titles-Portuguese -->
     <string name="title_no_internet">Sem Internet</string>
+    <string name="title_online_mode">Modo Online</string>
+    <string name="title_offline_mode">Modo Offline</string>
+
 
     <!-- Messages-Portuguese -->
     <string name="message_no_internet">Ops, verfique sua conexão de internet!</string>
     <string name="message_empty_result">Sem resultados</string>
     <string name="general_error">Houve um erro, por favor reinicie o app e contate o suporte!</string>
-    <string name="message_empty_answers">Sem respostas ainda...</string>
+    <string name="message_empty_answers">No answers yet..</string>
+    <string name="message_online_mode">No modo "online" as informações são baixadas sempre em tempo real, você deverá possuir uma boa conexão de internet.</string>
+    <string name="message_offline_mode">No mode "offline" serão disponibilizadas as perguntas baixadas pela última vez. Se nunca houve um download, nenhuma informação será mostrada.</string>
+    <string name="message_empty_result_offline">Nenhuma informação foi salva no banco de dados, favor realizar pelo menos uma consulta no modo online. Você gostaria de alterar para o modo "online"?</string>
 
     <!-- Words-Portuguese -->
     <string name="word_user">Usuário</string>
     <string name="word_classification">Classificação</string>
     <string name="word_search">Pesquisa</string>
+    <string name="word_continue">Continuar</string>
+    <string name="word_cancel">Cancelar</string>
+    <string name="word_change">Mudar</string>
 
     <!-- JSON_Test -->
-    <string name="json_test"></string>
 
 </resources>

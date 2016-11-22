@@ -1,9 +1,9 @@
 package com.example.aureo.sofmaster;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +25,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * QuestionActivity - displays de current question body and answers
+ */
+
 public class QuestionActivity extends AppCompatActivity {
 
     // ******   Variables  *****
@@ -35,7 +39,6 @@ public class QuestionActivity extends AppCompatActivity {
     private static ListView listViewAnswers;
     private static ArrayAdapter<Answer_Line> adapterListViewAnswer;
     private static ArrayList<Answer_Line> arrayListAnswers = new ArrayList<>();
-
 
     // ******   Inicialization Rotines  *****
     @Override
@@ -60,7 +63,6 @@ public class QuestionActivity extends AppCompatActivity {
 
         // *****   Configure Controls    *****
         configureControls();
-
 
     }
 
@@ -150,7 +152,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     public void onBackPressed() {
 
-        acaoVoltar();
+        backAction();
 
     }
 
@@ -158,14 +160,18 @@ public class QuestionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                acaoVoltar();
+                backAction();
                 break;
         }
         return true;
     }
 
-    public void acaoVoltar() {
-        NavUtils.navigateUpFromSameTask(this);
+    public void backAction() {
+        //NavUtils.navigateUpFromSameTask(this);
+        Intent intent = new Intent(ctx, MainActivity.class);
+        intent.putExtra("sync_mode_info", extras.getString("sync_mode_info"));
+        intent.putExtra("tag_info", extras.getString("tag_info"));
+        startActivity(intent);
     }
 
     // ******   General Rotines  *****

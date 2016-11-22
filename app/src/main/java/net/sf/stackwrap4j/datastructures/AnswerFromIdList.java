@@ -1,12 +1,12 @@
 package net.sf.stackwrap4j.datastructures;
 
-import java.io.IOException;
-
 import net.sf.stackwrap4j.StackWrapper;
 import net.sf.stackwrap4j.entities.Answer;
 import net.sf.stackwrap4j.exceptions.ParameterNotSetException;
 import net.sf.stackwrap4j.json.JSONException;
 import net.sf.stackwrap4j.query.AnswerQuery;
+
+import java.io.IOException;
 
 public class AnswerFromIdList extends AutoFetchList<Answer> {
 
