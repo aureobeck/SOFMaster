@@ -19,7 +19,7 @@
     <string name="title_offline_mode">Modo Offline</string>
 
 
-    <!-- Messages-Portuguese -->
+    <!-- Messages - Portuguese -->
     <string name="message_no_internet">Ops, verfique sua conexão de internet!</string>
     <string name="message_empty_result">Sem resultados</string>
     <string name="general_error">Houve um erro, por favor reinicie o app e contate o suporte!</string>
